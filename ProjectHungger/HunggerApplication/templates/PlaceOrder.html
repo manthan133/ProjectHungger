@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>Place Order</title>
+    <style>
+        .Title
+        {
+            font-family: Times;
+            font-weight: bold;
+            font-size: 100px;
+        }
+        body
+        {
+            background-attachment: fixed;
+            background-color: white;
+            font-family: Times;
+            font-size: 35px;
+            background-size:cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+        <div class="Title"><pre>       Order Placed</pre></div><hr>
+        <pre>
+        Hey,<b><u>{{ request.session.name }}</u></b>
+        Greetings from Hungger !
+
+        Your order has been placed successfully !
+        The total bill for food you ordered is <b><u>Rs {{ request.session.total_amt }}/-</u></b>
+
+        You will be recieving it at any time,
+        At your address:
+            <u><b>{{request.session.address}}</b></u>
+        Pay your bill to the delivery guy.
+
+        The soft copy of the bill will be available to you,
+        through your registered email id (<b><u>{{ request.session.username }}</u></b>)
+
+        And especially don't forget to give us your valuable feedback !
+
+                                   <a href="/home" onclick="window.print();">Generate Reciept</a>
+        </pre>
+</body>
+</html>

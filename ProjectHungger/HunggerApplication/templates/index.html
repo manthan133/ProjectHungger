@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Hungger</title>
+        <script src="../static/HunggerApplication/js/rep.js"></script>
+        <script src="../static/HunggerApplication/js/mop.js"></script>
+        <link rel="stylesheet" type="text/css" href="../static/HunggerApplication/css/fontawesome-all.css">
+        <link rel="stylesheet" type="text/css" href="../static/HunggerApplication/css/cat.css">
+        <link rel="stylesheet" type="text/css" href="../static/HunggerApplication/css/signup.css">
+        <link rel="stylesheet" type="text/css" href="../static/HunggerApplication/css/login.css">
+        <link rel="stylesheet" type="text/css" href="../static/HunggerApplication/css/nav.css">
+        <link rel="stylesheet" type="text/css" href="../static/HunggerApplication/css/gal.css">
+        <link rel="stylesheet" type="text/css" href="../static/HunggerApplication/css/content.css">
+    </head>
+
+	<body>
+		<div class="content" id="main">
+                    <div class="toy">
+                            <ul id="nav" class="nav" >
+                            <li><div class="til">Hungger</div></li>
+                            {% if request.session.session_key %}
+                            <form  method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="logout" value="logout">
+                            <li><button class="nav">Logout</button></li>
+                            </form>
+                            <!-- <li><a href="MyProfile"><button class="nav">My Profile</button></a></li> -->
+                            <!--<li><a href="MyOrder"><div><button class="nav">My Orders</button></div></a></li>-->
+                            <li><a href="cart"><button class="nav"><i class="fa fa-shopping-cart"></i>&nbsp;Cart({{request.session.cart_count}})</button></a></li>
+                            <li><button class="sti">Welcome,{{ request.session.name }}</button></li>
+                            {% else %}
+                            <li><a><button onclick="os()" class="nav">Sign Up</button></a></li>
+                            <li><a><button onclick="ol()" class="nav">Login</button></a></li>
+                            <li><button class="sti">Welcome, Guest</button></li>
+		                        {% endif %}
+                        </ul>
+                        <div class="navbar">
+                            <div>
+                                <div class="dropdown">
+                                  <button class="dropbtn">Categories</button>
+                                  <div class="dropdown-content">
+                                    {% for item in types %}
+                                        <a href="food?type={{ item.type }}">{{ item.type }}</a>
+                                    {% endfor %}
+                                      <a href="food">All Available</a>
+                                  </div>
+                                </div>
+                                <div class="dropbtn"><a href="AboutUs">About Us</a></div>
+                            </div>
+                            <div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="w3-content w3-section">
+                          <img class="fs" src="../static/HunggerApplication/img/original/Burger.jpg" style="width:100%">
+                          <img class="fs" src="../static/HunggerApplication/img/original/Pizza.jpg" style="width:100%">
+                          <img class="fs" src="../static/HunggerApplication/img/original/FriedRice.jpg" style="width:100%">
+                        </div>
+                        <script>carousel();</script>
+                    </div>
+		</div>
+		<div id="login" class="modal">
+		  <form class="modal-content" action="" method="post">
+              {% csrf_token %}
+		    <div onclick="cl()" class="close" title="Close">&times;</div>
+                      <div class="container">
+              {% if invalid %}
+                  Incorrect Credentials
+                  <script>
+                    ol();
+                  </script>
+              {% endif %}
+
+              {% if signedup %}
+                  Signup Successful
+                  <script>
+                    ol();
+                  </script>
+              {% endif %}
+              <div class="ti">Login</div><br>
+              <label for="email"><b>Email</b></label>
+			 <input type="text" class="box" name="email" required>
+			 <label for="pass"><b>Password</b></label>
+			 <input class="box" type="password"  name="password" required>
+                         <button type="button" onclick="cl()" class="but">Cancel</button>
+			    <button type="submit" class="but">Login</button>
+
+                      </div>
+		  </form>
+		</div>
+		<div id="signup" class="modal">
+		  <form class="modal-content" method="post">
+            {% csrf_token %}
+		    <div onclick="cs()" class="close" title="Close">&times;</div>
+                      <div class="container">
+              {% if exist %}
+                  User Already Exists
+                  <script>
+                    os();
+                  </script>
+              {% endif %}
+              <div class="ti">Sign Up</div><br>
+              <label for="name"><b>Name</b></label>
+			 <input type="text" class="box" name="name" required>
+			 <label for="email"><b>Email</b></label>
+			 <input type="email" class="box" name="email" oninput="checkemail(this)" required>
+			 <label for="pass"><b>Password</b></label>
+			 <input class="box" type="password" name="password" id="password" required>
+			 <label for="repass"><b>Repeat Password</b></label>
+			 <input class="box" type="password"  name="repassword" id="repassword" oninput="checkpassword(this)" required >
+             <script language='javascript' type='text/javascript'>
+            function checkpassword(input)
+            {
+                if (input.value != document.getElementById('password').value)
+                {
+                    input.setCustomValidity('Password must match!');
+                }
+                else
+                {
+                    input.setCustomValidity('');
+                }
+            }
+            function checkemail(input)
+            {
+                if(input.validity.typeMismatch)
+                {
+                    input.setCustomValidity('Something is wrong with Email id!');
+                }
+                else
+                {
+                    input.setCustomValidity('');
+                }
+            }
+            </script>
+            <label for="address"><b>Address</b></label><br>
+            <textarea rows="5" class="box"  name="address" required></textarea>
+            <button type="button" onclick="cs()" class="but">Cancel</button>
+            <button type="submit" class="but">Sign Up</button>
+                      </div>
+		  </form>
+		</div>
+	</body>
+</html>
